@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Simple website</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link rel="stylesheet" href="main.css" media="screen" title="no title" charset="utf-8">
+  </head>
+  <body>
+
+    <div class="container" ng-app="simpleSave" ng-controller="saveCtrl">
+
+<center>
+  <h1>Paste Mate</h1>
+</center>
+    <input type="text" name="subject" value="" class="form-control" placeholder="Your subject" id="subject" ng-model="subject">
+    <textarea class="form-control" placeholder="Your content here ..." id="content" rows="20" ng-model="content"></textarea>
+    <center>
+      <input type="button" name="save" id="save" class="btn btn-lg btn-success btn-block" value="save" ng-click="save()">
+    </center>
+    </div>
+
+
+
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-route.min.js">   </script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="script.js"></script>
+
+
+</html>
