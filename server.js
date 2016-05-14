@@ -1,5 +1,7 @@
 var express = require('express');
 var app=express();
+var cors= require('cors');
+ app.use(cors());
 
 var bodyParser=require('body-parser');
 var mongoose=require('mongoose');
@@ -15,17 +17,26 @@ db.once('open',function(){
 var pasteSchema=mongoose.Schema({
   subject: String,
   content:String
+
 });
 var pasteModel=mongoose.model('pastes',pasteSchema);
 
-//var paste=new pasteModel({subject:"My bio data",content:"i am a nice boy"});
-var paste=new pasteModel()
-paste.subject="i am good boy";
-paste.content="i am nice person";
-paste.save(function(err,docs,numaf){
-  console.log(err);
-  console.log(docs);
-  console.log(numaf);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
+app.post('/save',function(req,res){
+
+var paste=new pasteModel();
+paste.subject=req.body.subject;
+paste.content=req.body.content;
+paste.save(function(err,docs){
+  if(!err)
+  {
+    res.json({"response":docs});
+  }else{
+    res.json({"error":err});
+  }
+
+  });
 });
-//app.listen(3005);
+app.listen(3005);
