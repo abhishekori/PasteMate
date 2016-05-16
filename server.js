@@ -26,17 +26,27 @@ app.use(bodyParser.json());
 
 app.post('/save',function(req,res){
 
-var paste=new pasteModel();
-paste.subject=req.body.subject;
-paste.content=req.body.content;
-paste.save(function(err,docs){
-  if(!err)
-  {
-    res.json({"response":docs});
-  }else{
-    res.json({"error":err});
-  }
+  var paste=new pasteModel();
+  paste.subject=req.body.subject;
+  paste.content=req.body.content;
+  paste.save(function(err,docs){
+    if(!err)
+    {
+      res.json({"response":docs._id});
+    }else{
+      res.json({"error":err});
+    }
 
+  });
+});
+
+app.get('/get/:id',function(req,res){
+  console.log(req.params.id);
+  var paste = new pasteModel();
+  pasteModel.find({'_id':req.params.id},function(err,docs){
+    //res.send(docs);
+    console.log(docs);
+    res.json(docs[0]);
   });
 });
 app.listen(3005);
