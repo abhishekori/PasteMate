@@ -26,9 +26,10 @@ app.use(bodyParser.json());
 
 
 function defaultData(content,type){
+  var rContent=content;
 var defaultContent;
 
-  if(!content.trim())
+  if(rContent==null)
   {
     switch (type) {
       case 1:
@@ -61,6 +62,7 @@ app.post('/save',function(req,res){
   paste.save(function(err,docs){
     if(!err)
     {
+      console.log("saved");
       res.json({"response":docs._id});
     }else{
       res.json({"error":err});

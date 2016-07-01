@@ -22,35 +22,44 @@ app.controller('cfgController',function($scope){
 
 });
 
-function isEmpty(content){
-  if(!content.trim())
-  {
-  return true;
-}else{
-  return false;
-}
+app.service('check',function(){
 
-}
-app.controller('saveCtrl',function($scope,$http) {
-var sub;
-var cont;
+  this.isEmpty=function(data){
+    if(data==null)
+    {
+      return true;
+    }else{
+      return false;
+    }
+
+  }
+})
+
+
+app.controller('saveCtrl',function($scope,$http,check) {
+var sub=null;
+var cont=null;
+
 
   $scope.save=function(){
+
     sub=$scope.subject;
     cont=$scope.content;
+
     console.log(sub+" "+cont);
 
-    if(!isEmpty)
-    {
-      $http.post('http://localhost:3005/save',{subject:sub,content:cont}).success(function(response){
+if(check.isEmpty(sub))
+{
+    alert("Please enter the data");
+}else{
 
+//alert("hes");
+$http.post('http://localhost:3005/save',{subject:sub,content:cont}).success(function(response){
         $scope.link=response.response;
-
-      }else{
-
-    }
         });
+}
   }
+
 });
 
 app.controller('getCtrl',function($scope,$http,$location,$routeParams){
@@ -62,4 +71,8 @@ app.controller('getCtrl',function($scope,$http,$location,$routeParams){
       $scope.subject=response.subject;
       $scope.content=response.content;
   });
+});
+
+app.controller('myCtrl', function(ngToast) {
+
 });
