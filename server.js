@@ -24,11 +24,40 @@ var pasteModel=mongoose.model('pastes',pasteSchema);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+
+function defaultData(content,type){
+var defaultContent;
+
+  if(!content.trim())
+  {
+    switch (type) {
+      case 1:
+      defaultContent="Untitled Subject";
+
+        break;
+
+        case 2:
+        defaultContent="No body content saved";
+        break;
+      default:
+
+    }
+return defaultContent;
+
+
+  }
+
+  return defaultContent;
+
+
+
+}
 app.post('/save',function(req,res){
 
   var paste=new pasteModel();
-  paste.subject=req.body.subject;
-  paste.content=req.body.content;
+
+  paste.subject=defaultData(req.body.subject,1);
+  paste.content=defaultData(req.body.content,2);
   paste.save(function(err,docs){
     if(!err)
     {
