@@ -29,7 +29,7 @@ function defaultData(content,type){
   var rContent=content;
 var defaultContent;
 
-  if(rContent==null)
+  if(content=='')
   {
     switch (type) {
       case 1:
@@ -43,13 +43,10 @@ var defaultContent;
       default:
 
     }
-return defaultContent;
-
-
+    return defaultContent;
+  }else {
+    return content;
   }
-
-  return defaultContent;
-
 
 
 }
@@ -57,12 +54,12 @@ app.post('/save',function(req,res){
 
   var paste=new pasteModel();
 
-  paste.subject=defaultData(req.body.subject,1);
-  paste.content=defaultData(req.body.content,2);
+  paste.subject= defaultData(req.body.subject,1);
+  paste.content= defaultData(req.body.content,2);
   paste.save(function(err,docs){
     if(!err)
     {
-      console.log("saved");
+      console.log(docs);
       res.json({"response":docs._id});
     }else{
       res.json({"error":err});

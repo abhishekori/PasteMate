@@ -1,16 +1,12 @@
-<link rel="stylesheet" href="node_modules/ng-toast/dist/ngToast.min.css">
 
-<script src="node_modules/ng-toast/dist/angular-animate.min.js"></script>
-<script src="node_modules/ng-toast/dist/angular-sanitize.min.js"></script>
-<script src="node_modules/ng-toast/dist/ngToast.min.js"></script>
-<div class="" ng-controller="saveCtrl">
-  
+<div class="" ng-controller="saveCtrl" ng-init="disable=false;saver='save'">
+
 <center>
 
 
-<input type="text" name="subject" value="" class="form-control" placeholder="Your subject" id="subject" ng-model="subject">
-<a href="index.html#/get/{{link}}">{{link}}</a>
-<textarea class="form-control" placeholder="Your content here ..." id="content" rows="20" ng-model="content"></textarea>
-  <input type="button" name="save" id="save" class="btn btn-lg btn-success btn-block" value="save" ng-click="save()">
+<input type="text" name="subject" value="" class="form-control" placeholder="Your subject" id="subject" ng-model="subject" ng-disabled="disable">
+
+<textarea class="form-control" placeholder="Your content here ..." id="content" rows="20" ng-model="content" ng-disabled="disable"></textarea>
+  <input type="button" name="save" id="save" class="btn btn-lg btn-success btn-block" value="{{ saver }}" ng-click="save()">
 </center>
 </div>

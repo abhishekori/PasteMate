@@ -36,12 +36,12 @@ app.service('check',function(){
 })
 
 
-app.controller('saveCtrl',function($scope,$http,check) {
+app.controller('saveCtrl',function($scope,$http,$window,check) {
 var sub=null;
 var cont=null;
 
-
   $scope.save=function(){
+
 
     sub=$scope.subject;
     cont=$scope.content;
@@ -53,9 +53,14 @@ if(check.isEmpty(sub))
     alert("Please enter the data");
 }else{
 
-//alert("hes");
+
+$scope.disable=true;
+$scope.saver='Please wait...';
 $http.post('http://localhost:3005/save',{subject:sub,content:cont}).success(function(response){
-        $scope.link=response.response;
+  console.log(response);
+        
+         $scope.disable=false;
+       $window.location.href = 'index.html#/get/'+response.response;
         });
 }
   }
