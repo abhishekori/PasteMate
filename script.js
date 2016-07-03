@@ -58,7 +58,7 @@ $scope.disable=true;
 $scope.saver='Please wait...';
 $http.post('http://localhost:3005/save',{subject:sub,content:cont}).success(function(response){
   console.log(response);
-        
+
          $scope.disable=false;
        $window.location.href = 'index.html#/get/'+response.response;
         });
@@ -73,6 +73,7 @@ app.controller('getCtrl',function($scope,$http,$location,$routeParams){
 
     $http.get('http://localhost:3005/get/'+id).success(function(response){
       console.log(response);
+      $scope.id=response._id;
       $scope.subject=response.subject;
       $scope.content=response.content;
   });
