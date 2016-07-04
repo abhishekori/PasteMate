@@ -1,6 +1,7 @@
 var express = require('express');
 var app=express();
 var cors= require('cors');
+var passwordHash = require('password-hash');
  app.use(cors());
 
 var bodyParser=require('body-parser');
@@ -16,7 +17,8 @@ db.once('open',function(){
 
 var pasteSchema=mongoose.Schema({
   subject: String,
-  content:String
+  content:String,
+  pass:String
 
 });
 var pasteModel=mongoose.model('pastes',pasteSchema);
@@ -47,19 +49,31 @@ var defaultContent;
   }else {
     return content;
   }
-
-
 }
+
+function isPasswordSet(input){
+  if(input!=null)
+  {
+    //paste.isPassword=1;
+    return passwordHash.generate(input);
+  }
+  //paste.isPassword=0;
+  return null;
+}
+
 app.post('/save',function(req,res){
 
   var paste=new pasteModel();
 
   paste.subject= defaultData(req.body.subject,1);
   paste.content= defaultData(req.body.content,2);
+  paste.pass=isPasswordSet(req.body.pass);
+
   paste.save(function(err,docs){
     if(!err)
     {
       console.log(docs);
+
       res.json({"response":docs._id});
     }else{
       res.json({"error":err});
@@ -71,10 +85,16 @@ app.post('/save',function(req,res){
 app.get('/get/:id',function(req,res){
   console.log(req.params.id);
   var paste = new pasteModel();
+  var isPass=0;
   pasteModel.find({'_id':req.params.id},function(err,docs){
     //res.send(docs);
     console.log(docs);
-    res.json(docs[0]);
+    if(docs.pass!="")
+    {
+      isPass=1;
+    }
+    res.json({"_id":docs[0]._id,"subject":docs[0].subject,"content":docs[0].content,"isPass":isPass});
+    //res.json(docs[0]);
   });
 });
 app.listen(3005);

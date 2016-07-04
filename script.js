@@ -39,12 +39,17 @@ app.service('check',function(){
 app.controller('saveCtrl',function($scope,$http,$window,check) {
 var sub=null;
 var cont=null;
-
+var pass=null;
   $scope.save=function(){
 
 
     sub=$scope.subject;
     cont=$scope.content;
+    if(!check.isEmpty($scope.pass))
+    {
+      pass=$scope.pass;
+    }
+
 
     console.log(sub+" "+cont);
 
@@ -52,11 +57,11 @@ if(check.isEmpty(sub))
 {
     alert("Please enter the data");
 }else{
-
+if(check.isEmpty())
 
 $scope.disable=true;
 $scope.saver='Please wait...';
-$http.post('http://localhost:3005/save',{subject:sub,content:cont}).success(function(response){
+$http.post('http://localhost:3005/save',{subject:sub,content:cont,pass:pass}).success(function(response){
   console.log(response);
 
          $scope.disable=false;
@@ -70,12 +75,23 @@ $http.post('http://localhost:3005/save',{subject:sub,content:cont}).success(func
 app.controller('getCtrl',function($scope,$http,$location,$routeParams){
     $scope.val="yes"
     var id = $routeParams.id;
+    var inputPass=null;
 
     $http.get('http://localhost:3005/get/'+id).success(function(response){
       console.log(response);
-      $scope.id=response._id;
-      $scope.subject=response.subject;
-      $scope.content=response.content;
+
+      if(response.isPass==0){
+        $scope.id=response._id;
+        $scope.subject=response.subject;
+        $scope.content=response.content;
+      }else{
+        inputPass=prompt("This content is password secured. Please enter the password");
+        //TODO: POST THE PASSWORD AND TO VERIFY
+
+      //   $http.post('http://localhost:3004/verifyPass',{inputPass:inputPass}).suc
+      //
+      // }
+
   });
 });
 
