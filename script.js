@@ -48,10 +48,11 @@ var pass=null;
     if(!check.isEmpty($scope.pass))
     {
       pass=$scope.pass;
+      pass=pass.trim();
     }
 
 
-    console.log(sub+" "+cont);
+//    console.log(sub+" "+cont);
 
 if(check.isEmpty(sub))
 {
@@ -62,7 +63,7 @@ if(check.isEmpty())
 $scope.disable=true;
 $scope.saver='Please wait...';
 $http.post('http://localhost:3005/save',{subject:sub,content:cont,pass:pass}).success(function(response){
-  console.log(response);
+//  console.log(response);
 
          $scope.disable=false;
        $window.location.href = 'index.html#/get/'+response.response;
@@ -76,22 +77,43 @@ app.controller('getCtrl',function($scope,$http,$location,$routeParams){
     $scope.val="yes"
     var id = $routeParams.id;
     var inputPass=null;
-
-    $http.get('http://localhost:3005/get/'+id).success(function(response){
-      console.log(response);
+    var got=null;
+//console.log("getisPass");
+    $http.get('http://localhost:3005/getIsPass/'+id).success(function(response){
+  //    console.log(response);
 
       if(response.isPass==0){
-        $scope.id=response._id;
-        $scope.subject=response.subject;
-        $scope.content=response.content;
+
+        console.log("get");
+        $http.get('http://localhost:3005/get/'+id).success(function(response){
+          console.log(response);
+
+    $scope.subject=response.subject;
+    $scope.content=response.content;
+    $scope.id=response.id;
+        });
+
       }else{
-        inputPass=prompt("This content is password secured. Please enter the password");
-        //TODO: POST THE PASSWORD AND TO VERIFY
 
-      //   $http.post('http://localhost:3004/verifyPass',{inputPass:inputPass}).suc
-      //
-      // }
+          inputPass=prompt("This content is password secured. Please enter the password");
+          if(inputPass!="" || inputPass==null)
+          {
+      //      console.log("verifyPass");
+            $http.post('http://localhost:3005/verifyPass',{inputPass:inputPass,id:id}).success(function(response){
+          //  console.log(response);
+        if(response.status!=0)
+        {
+          got=response.message;
+          $scope.subject=got.subject;
+          $scope.content=got.content;
+          $scope.id=got.id;
+        }else{
+          $scope.subject="Please verify your password";
+        }
+            });
+          }
 
+        }
   });
 });
 

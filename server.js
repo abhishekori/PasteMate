@@ -82,19 +82,48 @@ app.post('/save',function(req,res){
   });
 });
 
-app.get('/get/:id',function(req,res){
-  console.log(req.params.id);
-  var paste = new pasteModel();
-  var isPass=0;
-  pasteModel.find({'_id':req.params.id},function(err,docs){
-    //res.send(docs);
-    console.log(docs);
-    if(docs.pass!="")
+app.get('/getIsPass/:id',function(req,res){
+  console.log("getisPass");
+  var isPass=1;
+  pasteModel.find({"_id":req.params.id},function(err,docs){
+console.log(docs[0].pass);
+    if(docs[0].pass==null)
     {
-      isPass=1;
+      isPass=0;
     }
-    res.json({"_id":docs[0]._id,"subject":docs[0].subject,"content":docs[0].content,"isPass":isPass});
-    //res.json(docs[0]);
+
+    res.json({"isPass":isPass});
+
   });
 });
+
+
+app.get('/get/:id',function(req,res){
+  console.log("get");
+  console.log(req.params.id);
+  var paste = new pasteModel();
+
+  pasteModel.find({'_id':req.params.id},function(err,docs){
+
+    console.log(docs);
+
+    res.json({"_id":docs[0]._id,"subject":docs[0].subject,"content":docs[0].content});
+  });
+});
+
+
+app.post('/verifyPass',function(req,res){
+  console.log(isPasswordSet(req.body.inputPass));
+
+  pasteModel.find({"_id":req.body.id},function(err,docs){
+    if(passwordHash.verify(req.body.inputPass,docs[0].pass)){
+    console.log("true");
+    res.json({"status":1,"message":docs[0]});
+  }else{
+res.json({"status":0,"message":"wrong password"});
+  }
+  });
+
+});
+
 app.listen(3005);
