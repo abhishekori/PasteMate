@@ -22,7 +22,7 @@ app.controller('cfgController',function($scope){
 
 });
 
-app.service('check',function(){
+app.service('myFunc',function(){
 
   this.isEmpty=function(data){
     if(data==null)
@@ -33,10 +33,18 @@ app.service('check',function(){
     }
 
   }
+
+  this.shot=function(tag){
+    html2canvas(tag).then(function(canvas) {
+        document.body.appendChild(canvas);
+        //TODO: allign the saved screen shot , make it sharable
+    });
+
+  }
 })
 
 
-app.controller('saveCtrl',function($scope,$http,$window,check) {
+app.controller('saveCtrl',function($scope,$http,$window,myFunc) {
 var sub=null;
 var cont=null;
 var pass=null;
@@ -45,7 +53,7 @@ var pass=null;
 
     sub=$scope.subject;
     cont=$scope.content;
-    if(!check.isEmpty($scope.pass))
+    if(!myFunc.isEmpty($scope.pass))
     {
       pass=$scope.pass;
       pass=pass.trim();
@@ -54,11 +62,11 @@ var pass=null;
 
 //    console.log(sub+" "+cont);
 
-if(check.isEmpty(sub))
+if(myFunc.isEmpty(sub))
 {
     alert("Please enter the data");
 }else{
-if(check.isEmpty())
+if(myFunc.isEmpty())
 
 $scope.disable=true;
 $scope.saver='Please wait...';
@@ -73,7 +81,7 @@ $http.post('http://localhost:3005/save',{subject:sub,content:cont,pass:pass}).su
 
 });
 
-app.controller('getCtrl',function($scope,$http,$location,$routeParams){
+app.controller('getCtrl',function($scope,$http,$location,$routeParams,myFunc){
     $scope.val="yes"
     var id = $routeParams.id;
     var inputPass=null;
@@ -115,6 +123,12 @@ app.controller('getCtrl',function($scope,$http,$location,$routeParams){
 
         }
   });
+
+  $scope.click=function(){
+    //alert("sdfs");
+    var tag = document.getElementsByClassName("allContent");
+    myFunc.shot(tag);
+  }
 });
 
 app.controller('myCtrl', function(ngToast) {
