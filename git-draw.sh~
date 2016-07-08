@@ -1,0 +1,19 @@
+Bds
+Bi
+B
+B
+#!/bin/bash
+
+# Run this script inside a new empty git repo.
+
+D
+echo "Simple webiste intro needs to be updated" > README.md
+git add README.md
+touch gf
+git add gf
+echo 0 > gf
+GIT_AUTHOR_DATE=2016-07-06T12:00:00 GIT_COMMITTER_DATE=2016-07-06T12:00:00 git commit -a -m "gf" > /dev/null
+echo 1-0 > gf
+GIT_AUTHOR_DATE=2016-07-06T12:00:00 GIT_COMMITTER_DATE=2016-07-06T12:00:00 git commit -a -m "gf" > /dev/null
+echo 1-1 > gf
+echo "Your commit history has been created!, now run 'git push' to push the repo to GitHub."
