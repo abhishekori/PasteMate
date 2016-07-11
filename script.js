@@ -36,7 +36,11 @@ app.service('myFunc',function(){
 
   this.shot=function(tag){
     html2canvas(tag).then(function(canvas) {
-        document.body.appendChild(canvas);
+      var img    = canvas.toDataURL("image/png");
+document.body.appendChild(canvas);
+console.log(img);
+      return img;
+
         //TODO: allign the saved screen shot , make it sharable
     });
 
@@ -112,9 +116,16 @@ app.controller('getCtrl',function($scope,$http,$location,$routeParams,myFunc){
         if(response.status!=0)
         {
           got=response.message;
+          console.log(got);
           $scope.subject=got.subject;
           $scope.content=got.content;
-          $scope.id=got.id;
+          //$scope.id=got._id;
+$scope.shareUrlFb="https://www.facebook.com/sharer/sharer.php?u=http://localhost/simple_website/index.html/get/"+got._id;
+
+$scope.shareUrlTwitter="https://twitter.com/home?status=http://localhost/simple_website/index.html/get/"+got._id;
+
+$scope.shareUrlGplus="https://plus.google.com/share?url=http://localhost/simple_website/index.html/get/"+got._id;
+
         }else{
           $scope.subject="Please verify your password";
         }
@@ -127,7 +138,7 @@ app.controller('getCtrl',function($scope,$http,$location,$routeParams,myFunc){
   $scope.click=function(){
     //alert("sdfs");
     var tag = document.getElementsByClassName("allContent");
-    myFunc.shot(tag);
+    $scope.img=myFunc.shot(tag);
   }
 });
 

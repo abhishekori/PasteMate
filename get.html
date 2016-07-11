@@ -1,4 +1,9 @@
-
+<meta charset="utf-8">
+<meta property="og:url"                content="{{shareUrl}}" />
+<meta property="og:type"               content="article" />
+<meta property="og:title"              content="{{subject}}" />
+<meta property="og:description"        content="{{content}}" />
+<meta property="og:image"              content="{{img}}" />
 <div class="row">
   <div class="col-md-4">
 
@@ -8,7 +13,11 @@
   </div>
   <div class="col-md-4">
 
-  <h3>Share this note on </h3>  <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost/simple_website/index.html/get/{{ id }}" target="_blank"><h1 class="fa fa-facebook-official"></h1></a> <a href="https://twitter.com/home?status=http://localhost/simple_website/index.html/get/{{ id }}"><h1 class="fa fa-twitter-square" target="_blank"></h1></a> <a href="https://plus.google.com/share?url=http://localhost/simple_website/index.html/get/{{ id }}"><h1 class="fa fa-google-plus-square" target="_blank"></h1></a>
+  <h3>Share this note on </h3>  <a href="{{shareUrlFb}}" target="_blank"><h1 class="fa fa-facebook-official"></h1></a>
+<!-- https://twitter.com/home?status=http://localhost/simple_website/index.html/get/ -->
+<!-- https://plus.google.com/share?url=http://localhost/simple_website/index.html/get/ -->
+  <a href="{{shareUrlTwitter}}"><h1 class="fa fa-twitter-square" target="_blank"></h1></a>
+  <a href="{{shareUrlGplus}}"><h1 class="fa fa-google-plus-square" target="_blank"></h1></a>
   </div>
 </div>
 <div class="allContent" style="background-color: #fff;">
@@ -18,9 +27,10 @@
   <p ng-bind="content">
 
   </p>
+  <h1>{{ id }}</h1>
 </div>
 
 <center>
   <button class="btn btn-primary" ng-click="click()" download="YourFileName.jpg">Click</button>
-  
+
 </center>
