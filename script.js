@@ -34,17 +34,7 @@ app.service('myFunc',function(){
 
   }
 
-  this.shot=function(tag){
-    html2canvas(tag).then(function(canvas) {
-      var img    = canvas.toDataURL("image/png");
-document.body.appendChild(canvas);
-console.log(img);
-      return img;
 
-        //TODO: allign the saved screen shot , make it sharable
-    });
-
-  }
 })
 
 
@@ -90,6 +80,7 @@ app.controller('getCtrl',function($scope,$http,$location,$routeParams,myFunc){
     var id = $routeParams.id;
     var inputPass=null;
     var got=null;
+    //var img=null;
 //console.log("getisPass");
     $http.get('http://localhost:3005/getIsPass/'+id).success(function(response){
   //    console.log(response);
@@ -102,7 +93,14 @@ app.controller('getCtrl',function($scope,$http,$location,$routeParams,myFunc){
 
     $scope.subject=response.subject;
     $scope.content=response.content;
-    $scope.id=response.id;
+    $scope.id=response._id;
+
+    $scope.shareUrlFb="https://www.facebook.com/sharer/sharer.php?u=http://localhost/simple_website/index.html/get/"+response._id;
+
+    $scope.shareUrlTwitter="https://twitter.com/home?status=http://localhost/simple_website/index.html/get/"+response._id;
+
+    $scope.shareUrlGplus="https://plus.google.com/share?url=http://localhost/simple_website/index.html/get/"+response._id;
+
         });
 
       }else{
@@ -120,6 +118,8 @@ app.controller('getCtrl',function($scope,$http,$location,$routeParams,myFunc){
           $scope.subject=got.subject;
           $scope.content=got.content;
           //$scope.id=got._id;
+
+
 $scope.shareUrlFb="https://www.facebook.com/sharer/sharer.php?u=http://localhost/simple_website/index.html/get/"+got._id;
 
 $scope.shareUrlTwitter="https://twitter.com/home?status=http://localhost/simple_website/index.html/get/"+got._id;
@@ -135,11 +135,7 @@ $scope.shareUrlGplus="https://plus.google.com/share?url=http://localhost/simple_
         }
   });
 
-  $scope.click=function(){
-    //alert("sdfs");
-    var tag = document.getElementsByClassName("allContent");
-    $scope.img=myFunc.shot(tag);
-  }
+
 });
 
 app.controller('myCtrl', function(ngToast) {

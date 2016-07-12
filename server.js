@@ -126,4 +126,9 @@ res.json({"status":0,"message":"wrong password"});
 
 });
 
+app.post('/saveImg',function(req,res){
+console.log(req.body.img);
+
+res.send(req.body.img);
+})
 app.listen(3005);
