@@ -1,4 +1,4 @@
-var app=angular.module('simpleSave',['ngRoute']);
+var app=angular.module('simpleSave',['ngRoute','colorpicker.module', 'wysiwyg.module']);
 
 app.config(function($routeProvider){
 
@@ -42,11 +42,15 @@ app.controller('saveCtrl',function($scope,$http,$window,myFunc) {
 var sub=null;
 var cont=null;
 var pass=null;
+
+
+
   $scope.save=function(){
 
 
     sub=$scope.subject;
     cont=$scope.content;
+    console.log(cont);
     if(!myFunc.isEmpty($scope.pass))
     {
       pass=$scope.pass;

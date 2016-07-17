@@ -6,7 +6,7 @@
 
 <input autocomplete="off" type="text" name="subject" class="form-control" placeholder="Your subject" id="subject" ng-model="subject" ng-disabled="disable" autocomplete="off" >
 
-<textarea class="form-control" placeholder="Your content here ..." id="content" rows="20" ng-model="content" ng-disabled="disable"></textarea>
+<textarea class="form-control" placeholder="Your content here ..." id="content"  rows="20" ng-model="content" ng-disabled="disable"></textarea>
 
 
 <div class="row">
@@ -16,9 +16,23 @@
   <div class="col-md-6">
 <input type="password" class="form-control" id="lock" placeholder="Set password" ng-model="pass"/>
   </div>
+
+
 </div>
 <br />
   <input type="button" name="save" id="save" class="btn btn-lg btn-success btn-block" value="{{ saver }}" ng-click="save()">
 
 </center>
+<wysiwyg
+          textarea-class="form-control"
+          textarea-height="180px"
+
+          textarea-required
+          ng-model="data.text"
+
+          textarea-menu="menu"
+          >
+        </wysiwyg>
+
+          {{data.text}}
 </div>
