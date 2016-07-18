@@ -8,7 +8,8 @@
   </div>
   <div class="col-md-4">
 
-  <h3>Share this note on </h3>  <a href="{{shareUrlFb}}" target="_blank"><h1 class="fa fa-facebook-official"></h1></a>
+  <h3>Share this note on </h3>  <a href="{{shareUrlFb}}" target="_blank">
+    <h1 class="fa fa-facebook-official"></h1></a>
 <!-- https://twitter.com/home?status=http://localhost/simple_website/index.html/get/ -->
 <!-- https://plus.google.com/share?url=http://localhost/simple_website/index.html/get/ -->
   <a href="{{shareUrlTwitter}}"><h1 class="fa fa-twitter-square" target="_blank"></h1></a>
@@ -19,13 +20,13 @@
   <b><h1 ng-bind="subject"></h1></b>
   <br><br>
 
-  <p ng-bind="content">
+  <div ng-bind-html="content">
 
-  </p>
+  </div>
 
 </div>
 
 <center>
-  
+
 
 </center>

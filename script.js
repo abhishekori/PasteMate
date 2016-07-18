@@ -49,7 +49,7 @@ var pass=null;
 
 
     sub=$scope.subject;
-    cont=$scope.content;
+    cont=$scope.data.text;
     console.log(cont);
     if(!myFunc.isEmpty($scope.pass))
     {
@@ -58,7 +58,7 @@ var pass=null;
     }
 
 
-//    console.log(sub+" "+cont);
+   console.log(sub+" "+cont);
 
 if(myFunc.isEmpty(sub))
 {
@@ -79,7 +79,7 @@ $http.post('http://localhost:3005/save',{subject:sub,content:cont,pass:pass}).su
 
 });
 
-app.controller('getCtrl',function($scope,$http,$location,$routeParams,myFunc){
+app.controller('getCtrl',function($scope,$http,$location,$routeParams,myFunc,$sce){
     $scope.val="yes"
     var id = $routeParams.id;
     var inputPass=null;
@@ -96,7 +96,7 @@ app.controller('getCtrl',function($scope,$http,$location,$routeParams,myFunc){
           console.log(response);
 
     $scope.subject=response.subject;
-    $scope.content=response.content;
+    $scope.content=$sce.trustAsHtml(response.content);
     $scope.id=response._id;
 
     $scope.shareUrlFb="https://www.facebook.com/sharer/sharer.php?u=http://localhost/simple_website/index.html/get/"+response._id;
