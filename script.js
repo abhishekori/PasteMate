@@ -120,7 +120,7 @@ app.controller('getCtrl',function($scope,$http,$location,$routeParams,myFunc,$sc
           got=response.message;
           console.log(got);
           $scope.subject=got.subject;
-          $scope.content=got.content;
+          $scope.content=$sce.trustAsHtml(got.content);
           //$scope.id=got._id;
 
 
